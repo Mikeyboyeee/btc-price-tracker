@@ -15,6 +15,19 @@ export class PriceController {
 
   constructor(private readonly priceService: PriceService) {}
 
+  @Get('health')
+  @ApiOperation({
+    summary: 'Health check endpoint',
+    description: 'Simple health check to verify service is running',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Service is healthy',
+  })
+  healthCheck() {
+    return { status: 'ok', timestamp: new Date().toISOString() };
+  }
+
   @Get('latest')
   @ApiOperation({
     summary: 'Get latest Bitcoin price with moving averages',

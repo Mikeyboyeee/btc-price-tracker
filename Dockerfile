@@ -37,9 +37,9 @@ EXPOSE 8080
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \  
-  CMD node -e "require('http').get('http://localhost:8080/latest', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+# Health check - uses dedicated /health endpoint
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s \  
+  CMD node -e "require('http').get('http://localhost:8080/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
 # Start the application
 CMD ["node", "dist/main.js"]
